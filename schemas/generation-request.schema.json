@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adaptive-learning-generator.local/schemas/generation-request.schema.json",
+  "title": "GenerationRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "requestId",
+    "subject",
+    "topicKey",
+    "topic",
+    "generalObjective",
+    "materialType",
+    "durationMinutes",
+    "profiles"
+  ],
+  "properties": {
+    "requestId": { "type": "string", "minLength": 1 },
+    "subject": { "type": "string", "minLength": 1 },
+    "topicKey": { "enum": ["genetics", "motion"] },
+    "topic": { "type": "string", "minLength": 1 },
+    "generalObjective": { "type": "string", "minLength": 1 },
+    "materialType": { "type": "string", "minLength": 1 },
+    "durationMinutes": { "type": "integer", "minimum": 5, "maximum": 120 },
+    "sourceContext": { "type": "string" },
+    "generalInstructions": { "type": "string" },
+    "profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "course",
+          "knowledgeLevel",
+          "priorKnowledge",
+          "specificObjective",
+          "expectedComplexity"
+        ],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "course": { "type": "string", "minLength": 1 },
+          "knowledgeLevel": { "type": "string", "minLength": 1 },
+          "priorKnowledge": { "type": "string", "minLength": 1 },
+          "specificObjective": { "type": "string", "minLength": 1 },
+          "expectedComplexity": { "enum": ["introductory", "intermediate", "advanced"] },
+          "considerations": { "type": "string" },
+          "additionalInstructions": { "type": "string" }
+        }
+      }
+    }
+  }
+}

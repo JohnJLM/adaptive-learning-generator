@@ -1,0 +1,29 @@
+{
+  "name": "adaptive-learning-generator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TFM prototype for generating reviewable adaptive educational materials.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.5.2",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^5.0.3"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.5.0",
+    "@mui/material": "^9.5.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  }
+}

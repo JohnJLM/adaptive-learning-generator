@@ -1,0 +1,46 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+}
+
+.skip-link {
+  left: 16px;
+  position: fixed;
+  top: -64px;
+  z-index: 1500;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+    margin-bottom: 16px;
+  }
+
+  .print-material {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
