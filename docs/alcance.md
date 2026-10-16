@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Diseñar y evaluar un sistema que genere material educativo textual diferenciado para perfiles pedagógicos definidos por un docente. El prototipo no diagnostica alumnado ni sustituye la decisión docente.
+Diseñar y evaluar un sistema que genere paquetes educativos textuales y diferenciados para perfiles pedagógicos definidos por un docente. El prototipo no diagnostica alumnado ni sustituye la decisión docente.
 
 ## Casos iniciales
 
@@ -11,7 +11,7 @@ Diseñar y evaluar un sistema que genere material educativo textual diferenciado
 | BIO-01 | Biología y Geología | Herencia genética | Pasar de vocabulario y modelo básico a probabilidades, supuestos y límites. |
 | FIS-01 | Física y Química | Movimiento rectilíneo | Pasar de rapidez media a interpretación de representaciones y movimiento con aceleración constante. |
 
-El paquete inicial es una explicación breve y una actividad guiada con evidencia esperada para revisión docente.
+El paquete inicial combina, según preset o selección manual, explicación, actividad/taller, ejercicios/cuestionario/evaluación breve, solucionario, criterios, rúbrica y guía docente. No todos los módulos se generan siempre.
 
 ## Perfiles iniciales
 
@@ -42,6 +42,7 @@ Fuentes oficiales:
 - Diagnóstico o perfiles reales de menores.
 - Carga general de documentos y RAG completo.
 - Multimedia, cuentas multiusuario, pagos y comparativa entre proveedores.
+- Persistencia longitudinal de artefactos y versiones fuera de la sesión actual.
 - Afirmaciones de mejora del aprendizaje de estudiantes.
 
 ## Próxima decisión académica

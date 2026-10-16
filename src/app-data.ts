@@ -2,6 +2,7 @@ import type { StudentProfile, TopicKey } from "./domain";
 
 interface TopicDefaults {
   subject: string;
+  topic: string;
   objective: string;
   sourceContext: string;
 }
@@ -9,6 +10,7 @@ interface TopicDefaults {
 export const topicDefaults: Record<TopicKey, TopicDefaults> = {
   genetics: {
     subject: "Biología y Geología",
+    topic: "Genética mendeliana",
     objective:
       "Explicar cómo cambia el material sobre herencia genética según los conocimientos previos, el objetivo y la complejidad esperada de cada perfil.",
     sourceContext:
@@ -16,6 +18,7 @@ export const topicDefaults: Record<TopicKey, TopicDefaults> = {
   },
   motion: {
     subject: "Física y Química",
+    topic: "Movimiento rectilíneo",
     objective:
       "Interpretar el movimiento rectilíneo con una progresión desde rapidez media hasta aceleración constante, adaptando apoyos y razonamiento por perfil.",
     sourceContext:
@@ -32,6 +35,7 @@ const initialProfiles: StudentProfile[] = [
     priorKnowledge: "Vocabulario científico o matemático elemental relacionado con el caso.",
     specificObjective: "Reconocer la idea central y aplicar un procedimiento con ayuda explícita.",
     expectedComplexity: "introductory",
+    accessibilitySupportIds: [],
     considerations: "Frases breves, pasos numerados, un ejemplo resuelto y comprobación de unidades o vocabulario.",
     additionalInstructions: "No asumir que el curso equivale por sí solo a un diagnóstico de conocimientos.",
   },
@@ -43,6 +47,7 @@ const initialProfiles: StudentProfile[] = [
     priorKnowledge: "Conceptos base del tema y capacidad de interpretar una representación sencilla.",
     specificObjective: "Relacionar conceptos y resolver una situación guiada justificando el procedimiento.",
     expectedComplexity: "intermediate",
+    accessibilitySupportIds: [],
     considerations: "Reducir el andamiaje progresivamente e incluir interpretación de datos, tabla o gráfica cuando proceda.",
     additionalInstructions: "Hacer explícitos los supuestos del modelo utilizado.",
   },
@@ -54,13 +59,17 @@ const initialProfiles: StudentProfile[] = [
     priorKnowledge: "Prerrequisitos disciplinares y autonomía para contrastar modelos y justificar resultados.",
     specificObjective: "Modelizar, argumentar los supuestos y analizar límites de una explicación o solución.",
     expectedComplexity: "advanced",
+    accessibilitySupportIds: [],
     considerations: "Incluir razonamiento, interpretación crítica y una tarea que no se resuelva solo sustituyendo valores.",
     additionalInstructions: "Distinguir resultados del modelo de conclusiones generales sobre el fenómeno.",
   },
 ];
 
 export function createInitialProfiles(): StudentProfile[] {
-  return initialProfiles.map((profile) => ({ ...profile }));
+  return initialProfiles.map((profile) => ({
+    ...profile,
+    accessibilitySupportIds: [...profile.accessibilitySupportIds],
+  }));
 }
 
 export function createNewProfile(profiles: StudentProfile[]): StudentProfile {
@@ -78,6 +87,7 @@ export function createNewProfile(profiles: StudentProfile[]): StudentProfile {
     priorKnowledge: "Describir los conocimientos previos relevantes.",
     specificObjective: "Definir un objetivo específico observable.",
     expectedComplexity: "intermediate",
+    accessibilitySupportIds: [],
     considerations: "Indicar apoyos o condiciones de presentación.",
     additionalInstructions: "",
   };

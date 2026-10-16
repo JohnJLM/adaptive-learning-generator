@@ -21,6 +21,11 @@ body {
   display: none;
 }
 
+.artifact-list {
+  margin: 8px 0 0;
+  padding-left: 24px;
+}
+
 @media print {
   @page {
     margin: 14mm;
@@ -40,6 +45,11 @@ body {
   }
 
   .print-material {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .artifact-list {
     break-inside: avoid;
     page-break-inside: avoid;
   }

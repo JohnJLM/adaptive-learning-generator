@@ -14,9 +14,9 @@ No se pretende demostrar aprendizaje del alumnado a partir de esta evaluación d
 ## Objetivos operativos
 
 - Recoger perfiles editables y producir una solicitud estructurada.
-- Validar una respuesta por perfil antes de mostrarla.
-- Hacer visibles las diferencias de complejidad, apoyo, ejemplos y actividades.
-- Conservar entradas, versiones, revisiones y aprobaciones para comparación reproducible.
+- Validar un paquete de artefactos por perfil antes de mostrarlo.
+- Hacer visibles las diferencias de complejidad, apoyo, ejemplos, actividades y evaluación.
+- Conservar en la sesión entradas, versiones, revisiones y aprobaciones para comparación reproducible; definir persistencia protegida antes del estudio longitudinal.
 - Evaluar las condiciones A/B/C con fuentes, rúbrica y criterios fijados antes de la tanda final.
 
 ## Condiciones de evaluación previstas
@@ -33,5 +33,5 @@ Los resultados se interpretarán de forma descriptiva y de acuerdo con el tamañ
 
 - Los perfiles 1.º ESO, 4.º ESO y 2.º Bachillerato son una progresión experimental, no un diagnóstico ni una secuenciación oficial directa.
 - El marco inicial es LOMLOE estatal; cualquier alineación autonómica o de centro requerirá comprobación documental específica.
-- Las fuentes didácticas verificables, la persistencia, la integración n8n/Gemini, las cuotas y los evaluadores siguen pendientes.
+- Las fuentes didácticas verificables, la persistencia longitudinal, la ejecución real de la plantilla n8n/Gemini, las cuotas y los evaluadores siguen pendientes.
 - La ficha académica completa y el historial de decisiones se mantienen fuera de este repositorio, en el dossier privado de trabajo del TFM.

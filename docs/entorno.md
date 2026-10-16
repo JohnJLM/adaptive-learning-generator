@@ -8,7 +8,7 @@ Estado: configuración pendiente. Este documento no contiene ni debe contener se
 |---|---|---|
 | Repositorio GitHub | Remoto creado | `https://github.com/JohnJLM/adaptive-learning-generator.git`; el primer commit aún no se ha creado ni publicado. |
 | Proyecto local | Preparado | `/home/leal9/projects/adaptive-learning-generator`. |
-| n8n | Pendiente | El usuario prevé crear una cuenta nueva con periodo de prueba en n8n Cloud. |
+| n8n | Plantilla preparada; ejecución pendiente | El contrato v2 se entrega como plantilla importable para n8n Cloud. |
 | LLM | Pendiente de prueba | Se usará Gemini API mediante una credencial existente del usuario. |
 | Frontend público | Pendiente | Cloudflare Pages se configura después de una integración real probada. |
 | Memoria académica | Pendiente | Probar Overleaf/LaTeX con la plantilla antes de convertirlo en fuente activa. |
@@ -19,7 +19,7 @@ Estado: configuración pendiente. Este documento no contiene ni debe contener se
 2. Crear una credencial de Gemini en n8n usando la clave existente del usuario directamente en la interfaz. No pegarla en chats, commits, exports ni capturas.
 3. Confirmar el modelo que aparece realmente disponible para esa cuenta; no seleccionar un nombre por documentación antigua.
 4. Ejecutar una llamada mínima y guardar solo identificadores, modelo, parámetros y resultado sanitizado.
-5. Crear el workflow de generación y configurar CORS/orígenes autorizados al desplegar el frontend.
+5. Importar `workflows/educational-package-gemini-sheets.template.json` y configurar CORS/orígenes autorizados al desplegar el frontend.
 
 ## Configuración local futura
 

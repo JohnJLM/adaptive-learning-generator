@@ -6,7 +6,10 @@ import {
   AccordionSummary,
   Box,
   Button,
+  Checkbox,
   Chip,
+  FormControlLabel,
+  FormGroup,
   Grid,
   MenuItem,
   Stack,
@@ -15,6 +18,7 @@ import {
 } from "@mui/material";
 
 import type { Complexity, StudentProfile } from "../domain";
+import { accessibilitySupports } from "../accessibility-supports";
 
 interface ProfileEditorProps {
   index: number;
@@ -78,7 +82,12 @@ export function ProfileEditor({
               {profile.course}
             </Typography>
           </Box>
-          <Chip label={complexityLabels[profile.expectedComplexity]} size="small" variant="outlined" />
+          <Stack direction="row" spacing={0.75} useFlexGap>
+            <Chip label={complexityLabels[profile.expectedComplexity]} size="small" variant="outlined" />
+            {profile.accessibilitySupportIds.length ? (
+              <Chip color="secondary" label={`${profile.accessibilitySupportIds.length} apoyos`} size="small" variant="outlined" />
+            ) : null}
+          </Stack>
         </Stack>
       </AccordionSummary>
       <AccordionDetails id={`${profile.id}-content`} sx={{ borderTop: 1, borderColor: "divider", px: { xs: 2, sm: 2.5 }, py: 2.5 }}>
@@ -154,6 +163,44 @@ export function ProfileEditor({
               required
               value={profile.specificObjective}
             />
+          </Grid>
+          <Grid size={12}>
+            <Box sx={{ border: 1, borderColor: "divider", borderRadius: 1, px: 1.5, py: 1.25 }}>
+              <Typography component="h3" variant="subtitle2">
+                Apoyos de accesibilidad
+              </Typography>
+              <Typography color="text.secondary" sx={{ mt: 0.35 }} variant="body2">
+                Selecciona apoyos para este material. No registra diagnósticos ni información personal del estudiante.
+              </Typography>
+              <FormGroup row sx={{ columnGap: 1, mt: 1.1 }}>
+                {accessibilitySupports.map((support) => {
+                  const isSelected = profile.accessibilitySupportIds.includes(support.id);
+                  return (
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={isSelected}
+                          onChange={(event) =>
+                            onChange({
+                              ...profile,
+                              accessibilitySupportIds: event.target.checked
+                                ? [...profile.accessibilitySupportIds, support.id]
+                                : profile.accessibilitySupportIds.filter((id) => id !== support.id),
+                            })
+                          }
+                          size="small"
+                        />
+                      }
+                      key={support.id}
+                      label={support.label}
+                      slotProps={{ typography: { variant: "body2" } }}
+                      sx={{ alignItems: "flex-start", maxWidth: { xs: "100%", md: "calc(50% - 0.5rem)" }, m: 0 }}
+                      title={support.description}
+                    />
+                  );
+                })}
+              </FormGroup>
+            </Box>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField
