@@ -41,12 +41,14 @@ import type {
   TopicKey,
 } from "./domain";
 import {
-  hasAssessmentMaterial,
-  hasObservableEvidence,
   materialCatalog,
   presetCatalog,
   presetMaterials,
 } from "./package-catalog";
+import {
+  MAX_REQUESTED_MATERIALS,
+  materialSelectionError,
+} from "./material-selection";
 import { generateMockMaterial } from "./mock-generator";
 import {
   finalizeWithN8n,
@@ -140,13 +142,22 @@ export function App() {
   };
 
   const handleMaterialToggle = (materialId: MaterialId, checked: boolean) => {
-    setForm((current) => ({
-      ...current,
-      preset: "custom",
-      requestedMaterials: checked
-        ? [...current.requestedMaterials, materialId]
-        : current.requestedMaterials.filter((item) => item !== materialId),
-    }));
+    setForm((current) => {
+      if (
+        checked &&
+        !current.requestedMaterials.includes(materialId) &&
+        current.requestedMaterials.length >= MAX_REQUESTED_MATERIALS
+      ) {
+        return current;
+      }
+      return {
+        ...current,
+        preset: "custom",
+        requestedMaterials: checked
+          ? [...current.requestedMaterials, materialId]
+          : current.requestedMaterials.filter((item) => item !== materialId),
+      };
+    });
     setFormMessage(null);
   };
 
@@ -996,6 +1007,9 @@ function MaterialSelection({
         <Typography component="h3" variant="subtitle1">
           {title}
         </Typography>
+        <Typography color="text.secondary" variant="caption">
+          {form.requestedMaterials.length}/{MAX_REQUESTED_MATERIALS} módulos seleccionados
+        </Typography>
         <FormGroup sx={{ mt: 1 }}>
           {materialCatalog
             .filter((material) => material.audience === audience)
@@ -1004,6 +1018,10 @@ function MaterialSelection({
                 control={
                   <Checkbox
                     checked={form.requestedMaterials.includes(material.id)}
+                    disabled={
+                      !form.requestedMaterials.includes(material.id) &&
+                      form.requestedMaterials.length >= MAX_REQUESTED_MATERIALS
+                    }
                     onChange={(event) =>
                       onToggle(material.id, event.target.checked)
                     }
@@ -1088,18 +1106,6 @@ function createRequestId(): string {
   return typeof crypto.randomUUID === "function"
     ? crypto.randomUUID()
     : `REQ-${Date.now().toString(36).toUpperCase()}`;
-}
-
-function materialSelectionError(materials: MaterialId[]): string | null {
-  if (!materials.length)
-    return "Selecciona al menos un módulo para el paquete.";
-  if (materials.includes("answer_key") && !hasAssessmentMaterial(materials)) {
-    return "El solucionario requiere ejercicios, cuestionario o evaluación breve para poder corresponderse con sus ítems.";
-  }
-  if (materials.includes("rubric") && !hasObservableEvidence(materials)) {
-    return "La rúbrica requiere una actividad, taller o instrumento de evaluación con evidencia observable.";
-  }
-  return null;
 }
 
 function mergeGeneration(
