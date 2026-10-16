@@ -1,6 +1,6 @@
 import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
 import {
@@ -45,7 +45,7 @@ interface MaterialResultsProps {
   finalization: FinalizationResponse | null;
   isFinalizing: boolean;
   isGenerating: boolean;
-  onEditRequest: () => void;
+  onReturnToMenu: () => void;
   onGlobalFeedbackChange: (value: string) => void;
   onFeedbackChange: (profileId: string, value: string) => void;
   onSelectionChange: (profileId: string, selected: boolean) => void;
@@ -74,7 +74,7 @@ export function MaterialResults({
   finalization,
   isFinalizing,
   isGenerating,
-  onEditRequest,
+  onReturnToMenu,
   onGlobalFeedbackChange,
   onFeedbackChange,
   onSelectionChange,
@@ -194,7 +194,7 @@ export function MaterialResults({
               <TextField disabled={finalization !== null || isFinalizing || isGenerating} fullWidth label="Feedback global" minRows={2} multiline onChange={(event) => onGlobalFeedbackChange(event.target.value)} placeholder="Por ejemplo: conserva el contenido base y aclara el vínculo entre la actividad y la evaluación." slotProps={{ htmlInput: { maxLength: 2000 } }} value={globalFeedback} />
               <FormControlLabel control={<Switch checked={includeApprovedProfiles} disabled={finalization !== null || isFinalizing || isGenerating} onChange={(event) => onIncludeApprovedChange(event.target.checked)} />} label="Permitir seleccionar de forma explícita perfiles ya aprobados" />
               <Stack direction={{ xs: "column", sm: "row" }} spacing={1} useFlexGap>
-                <Button disabled={isGenerating || isFinalizing || finalization !== null} onClick={onEditRequest} startIcon={<EditOutlinedIcon />} variant="outlined">Ajustar solicitud</Button>
+                <Button onClick={onReturnToMenu} startIcon={<ArrowBackRoundedIcon />} variant="outlined">Volver al menú</Button>
                 <Button disabled={!selectedCount || finalization !== null || isGenerating || isFinalizing} onClick={onRegenerate} startIcon={<ReplayOutlinedIcon />} variant="contained">
                   {isGenerating ? "Regenerando…" : `Regenerar ${selectedCount} perfil${selectedCount === 1 ? "" : "es"}`}
                 </Button>

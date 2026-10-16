@@ -11,6 +11,11 @@ import {
   Chip,
   Container,
   Divider,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControlLabel,
   FormGroup,
   Grid,
@@ -116,7 +121,9 @@ export function App() {
   >({});
   const [selectedProfileIds, setSelectedProfileIds] = useState<string[]>([]);
   const [includeApprovedProfiles, setIncludeApprovedProfiles] = useState(false);
+  const [isReturnDialogOpen, setIsReturnDialogOpen] = useState(false);
   const resultsRef = useRef<HTMLDivElement | null>(null);
+  const iterationRef = useRef(0);
   const isLiveMode = Boolean(n8nGenerationUrl);
 
   const handleTopicChange = (topicKey: TopicKey) => {
@@ -181,6 +188,7 @@ export function App() {
     request: GenerationRequest,
     kind: "initial" | "revision",
   ) => {
+    const iteration = iterationRef.current;
     setIsGenerating(true);
     setFormMessage(null);
 
@@ -188,6 +196,8 @@ export function App() {
       const response = isLiveMode
         ? await generateWithN8n(n8nGenerationUrl, accessKey, request)
         : generateMockMaterial(request);
+
+      if (iteration !== iterationRef.current) return;
 
       if (kind === "initial") {
         setGeneratedRequest(request);
@@ -244,6 +254,7 @@ export function App() {
         resultsRef.current?.focus({ preventScroll: true });
       });
     } catch (error) {
+      if (iteration !== iterationRef.current) return;
       setFormMessage({
         severity: "error",
         text:
@@ -252,7 +263,7 @@ export function App() {
             : "No se pudo conectar con el servicio de generación. Comprueba la URL, CORS y la disponibilidad de n8n.",
       });
     } finally {
-      setIsGenerating(false);
+      if (iteration === iterationRef.current) setIsGenerating(false);
     }
   };
 
@@ -384,6 +395,7 @@ export function App() {
 
   const handleFinalize = async () => {
     if (!generation || !generatedRequest) return;
+    const iteration = iterationRef.current;
     const approvedProfileIds = generation.materials
       .filter((material) => material.status === "approved")
       .map((material) => material.profileId);
@@ -420,6 +432,8 @@ export function App() {
           )
         : localFinalization;
 
+      if (iteration !== iterationRef.current) return;
+
       setFinalization(result);
       setFormMessage({
         severity: "success",
@@ -428,6 +442,7 @@ export function App() {
           : "Aprobación registrada solo en esta vista local; el modo local no crea un log remoto.",
       });
     } catch (error) {
+      if (iteration !== iterationRef.current) return;
       setFormMessage({
         severity: "error",
         text:
@@ -436,8 +451,29 @@ export function App() {
             : "No se pudo registrar la aprobación. Revisa la configuración del webhook y vuelve a intentarlo.",
       });
     } finally {
-      setIsFinalizing(false);
+      if (iteration === iterationRef.current) setIsFinalizing(false);
     }
+  };
+
+  const handleReturnToMenu = () => {
+    setIsReturnDialogOpen(true);
+  };
+
+  const confirmReturnToMenu = () => {
+    iterationRef.current += 1;
+    setGeneration(null);
+    setGeneratedRequest(null);
+    setGenerationHistory([]);
+    setFinalization(null);
+    setFeedbackByProfile({});
+    setGlobalFeedback("");
+    setSelectedProfileIds([]);
+    setIncludeApprovedProfiles(false);
+    setIsGenerating(false);
+    setIsFinalizing(false);
+    setFormMessage(null);
+    setActiveStep(0);
+    setIsReturnDialogOpen(false);
   };
 
   return (
@@ -801,15 +837,12 @@ export function App() {
                 sx={{ justifyContent: "space-between" }}
               >
                 <Button
-                  onClick={() => {
-                    setActiveStep(0);
-                    setFormMessage(null);
-                  }}
+                  onClick={handleReturnToMenu}
                   startIcon={<ArrowBackRoundedIcon />}
                   type="button"
                   variant="outlined"
                 >
-                  Volver al contexto
+                  Volver al menú
                 </Button>
                 <Box aria-live="polite">
                   {formMessage ? (
@@ -850,10 +883,7 @@ export function App() {
                 isFinalizing={isFinalizing}
                 isGenerating={isGenerating}
                 onApproval={handleApproval}
-                onEditRequest={() => {
-                  setActiveStep(1);
-                  setFormMessage(null);
-                }}
+                onReturnToMenu={handleReturnToMenu}
                 onFeedbackChange={handleFeedbackChange}
                 onFinalize={handleFinalize}
                 onGlobalFeedbackChange={setGlobalFeedback}
@@ -870,6 +900,26 @@ export function App() {
           ) : null}
         </Container>
       </Box>
+
+      <Dialog
+        aria-describedby="return-menu-description"
+        aria-labelledby="return-menu-title"
+        onClose={() => setIsReturnDialogOpen(false)}
+        open={isReturnDialogOpen}
+      >
+        <DialogTitle id="return-menu-title">¿Volver al menú?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="return-menu-description">
+            Se perderán los resultados, feedback, aprobaciones e historial de la iteración actual. La configuración del formulario se conservará para que puedas ajustarla antes de generar un nuevo paquete. Los registros ya enviados a n8n no se eliminan.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIsReturnDialogOpen(false)}>Cancelar</Button>
+          <Button color="warning" onClick={confirmReturnToMenu} variant="contained">
+            Volver y descartar iteración
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Box
         className="no-print"

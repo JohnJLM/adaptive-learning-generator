@@ -14,6 +14,9 @@ Este registro conserva resultados y metadatos de pruebas manuales contra n8n Clo
 | Cierre | Correcto | `E2E-AUTH-009` / `GEN-MVB73F8B` devolvio HTTP 202, aprobo `P01` y no invoco Gemini. |
 | Log de cierre | Correcto | Verificado manualmente en Google Sheets con metadatos. |
 | Revision dirigida | Correcto | `E2E-REV-002` devolvio HTTP 200 con solo `P01`, version 2 y los cinco artefactos solicitados. |
+| Generacion desde UI Cloudflare | Correcto | La solicitud `55145e1e-9be9-4e12-b1b3-929970ba4eac` genero `P01` y `P02` en version 1 con HTTP 200 y log de Google Sheets. |
+| Revision selectiva desde UI | Correcto | La misma solicitud regenero solo `P02` como version 2 (`GEN-MVB94IT1`); `P01` no se regenero. |
+| Cierre desde UI | Correcto | El cierre de `GEN-MVB94IT1` aprobo `P01|P02` con HTTP 202 y fila `finalized` en Google Sheets. |
 
 ## Diagnosticos Resueltos
 
@@ -24,5 +27,5 @@ Este registro conserva resultados y metadatos de pruebas manuales contra n8n Clo
 ## Limites de la Evidencia
 
 - La revision dirigida uso artefactos previos genericos y validos segun contrato para probar transporte, versionado y salida del workflow.
-- Aun falta una prueba visual en la UI con los artefactos reales que seleccione un perfil, introduzca feedback y confirme la actualizacion visible sin regenerar perfiles no seleccionados.
+- La UI Cloudflare tambien se probo con artefactos reales: se selecciono `P02`, se envio feedback y solo ese perfil alcanzo la version 2.
 - Cada Test URL de n8n requiere activar `Execute workflow` antes de una unica peticion.
