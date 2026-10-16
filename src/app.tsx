@@ -31,7 +31,12 @@ import {
 import type { FormEvent } from "react";
 import { useRef, useState } from "react";
 
-import { createInitialProfiles, createNewProfile, topicDefaults } from "./app-data";
+import {
+  createBlankProfile,
+  createInitialProfiles,
+  createNewProfile,
+  topicDefaults,
+} from "./app-data";
 import { MaterialResults } from "./components/material-results";
 import { ProfileEditor } from "./components/profile-editor";
 import type {
@@ -63,7 +68,7 @@ import {
 
 interface RequestForm {
   subject: string;
-  topicKey: TopicKey;
+  topicKey: TopicKey | "";
   topic: string;
   preset: PackagePreset;
   requestedMaterials: MaterialId[];
@@ -89,6 +94,18 @@ const initialForm: RequestForm = {
   durationMinutes: "45",
   generalObjective: topicDefaults[initialTopic].objective,
   sourceContext: topicDefaults[initialTopic].sourceContext,
+  generalInstructions: "",
+};
+
+const blankTemplateForm: RequestForm = {
+  subject: "",
+  topicKey: "",
+  topic: "",
+  preset: "custom",
+  requestedMaterials: [],
+  durationMinutes: "",
+  generalObjective: "",
+  sourceContext: "",
   generalInstructions: "",
 };
 
@@ -145,6 +162,12 @@ export function App() {
       preset,
       requestedMaterials: presetMaterials(preset),
     }));
+    setFormMessage(null);
+  };
+
+  const handleClearTemplate = () => {
+    setForm(blankTemplateForm);
+    setProfiles([createBlankProfile()]);
     setFormMessage(null);
   };
 
@@ -611,10 +634,19 @@ export function App() {
               </Grid>
 
               <Divider sx={{ mb: 3 }} />
-              <SectionHeading
-                title="Contexto común"
-                description="Este contexto se mantiene para todos los perfiles y artefactos del paquete."
-              />
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={1.5}
+                sx={{ alignItems: { sm: "flex-start" }, justifyContent: "space-between" }}
+              >
+                <SectionHeading
+                  title="Contexto común"
+                  description="Este contexto se mantiene para todos los perfiles y artefactos del paquete."
+                />
+                <Button onClick={handleClearTemplate} type="button" variant="outlined">
+                  Borrar plantilla
+                </Button>
+              </Stack>
               <Alert
                 icon={false}
                 severity={isLiveMode ? "warning" : "info"}
@@ -632,12 +664,18 @@ export function App() {
                   <TextField
                     fullWidth
                     label="Caso de demostración"
-                    onChange={(event) =>
-                      handleTopicChange(event.target.value as TopicKey)
-                    }
                     select
+                    onChange={(event) => {
+                      const topicKey = event.target.value as TopicKey | "";
+                      if (topicKey) {
+                        handleTopicChange(topicKey);
+                      } else {
+                        handleClearTemplate();
+                      }
+                    }}
                     value={form.topicKey}
                   >
+                    <MenuItem value="">Sin plantilla (manual)</MenuItem>
                     <MenuItem value="genetics">
                       BIO-01 · Genética mendeliana
                     </MenuItem>
@@ -1139,7 +1177,7 @@ function buildGenerationRequest(
   return {
     requestId,
     subject: form.subject.trim(),
-    topicKey: form.topicKey,
+    ...(form.topicKey ? { topicKey: form.topicKey } : {}),
     topic: form.topic.trim(),
     generalObjective: form.generalObjective.trim(),
     durationMinutes: Number(form.durationMinutes),

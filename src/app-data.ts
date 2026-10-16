@@ -72,6 +72,21 @@ export function createInitialProfiles(): StudentProfile[] {
   }));
 }
 
+export function createBlankProfile(): StudentProfile {
+  return {
+    id: "P01",
+    name: "",
+    course: "",
+    knowledgeLevel: "",
+    priorKnowledge: "",
+    specificObjective: "",
+    expectedComplexity: "introductory",
+    accessibilitySupportIds: [],
+    considerations: "",
+    additionalInstructions: "",
+  };
+}
+
 export function createNewProfile(profiles: StudentProfile[]): StudentProfile {
   const highestProfileNumber = profiles.reduce((highest, profile) => {
     const numericId = Number(profile.id.replace(/^P/, ""));
