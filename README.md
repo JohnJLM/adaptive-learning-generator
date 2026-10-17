@@ -100,6 +100,10 @@ Las pruebas cubren la expansión de presets, el generador determinista, la relac
 - La trazabilidad de versiones y feedback se mantiene en la sesión de frontend. La persistencia de artefactos/versiones para análisis longitudinal es una extensión necesaria antes de un estudio con participantes.
 - El material es un borrador para revisión docente; no debe utilizarse directamente para evaluar alumnado.
 
+## Licencia
+
+Este proyecto se distribuye bajo la [licencia MIT](LICENSE).
+
 ## Documentación
 
 - [Alcance](docs/alcance.md)
