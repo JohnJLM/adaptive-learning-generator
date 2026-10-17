@@ -8,7 +8,7 @@
         "authentication": "headerAuth",
         "responseMode": "responseNode",
         "options": {
-          "allowedOrigins": "https://adaptive-learning-generator.leal98john.workers.dev"
+          "allowedOrigins": "REPLACE_WITH_FRONTEND_ORIGIN"
         }
       },
       "id": "c3e8e5c9-7321-4cf1-9017-919f9d61a901",

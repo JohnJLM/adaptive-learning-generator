@@ -59,6 +59,19 @@ VITE_N8N_GENERATE_URL=https://your-n8n.example/webhook/adaptive-educational-pack
 
 La clave de acceso se introduce manualmente en la UI, viaja solo en `X-TFM-Access-Key` y no se persiste. No poner claves de Gemini, n8n ni Sheets en variables `VITE_`, Git o plantillas.
 
+La plantilla no incluye un origen CORS real. Antes de activar n8n, configura manualmente `Allowed Origins` en `Generation Webhook` con el origen exacto del frontend, sin ruta ni barra final. Consulta [Workflow n8n](docs/workflow-n8n.md) para GitHub Pages y desarrollo local.
+
+## GitHub Pages
+
+El workflow `.github/workflows/deploy-pages.yml` publica el contenido de `dist/` al hacer push a `main`. GitHub Pages debe configurarse con fuente **GitHub Actions**.
+
+1. Publica el repositorio solo después de completar la lista de [entrega pública](docs/public-release.md).
+2. En GitHub, crea la variable de repositorio `VITE_N8N_GENERATE_URL` con la URL **Production** del webhook n8n. Es una URL pública, no una clave.
+3. En n8n, configura manualmente el origen CORS `https://johnjlm.github.io` y usa la URL Production; no desplegar una URL `webhook-test`.
+4. El workflow asigna automáticamente la ruta base de Pages, por lo que el sitio funciona bajo `/adaptive-learning-generator/`.
+
+Si la variable de URL está vacía, el sitio se publica en modo local simulado y no llama a n8n.
+
 ## Contratos y catálogo
 
 - `schemas/generation-request.schema.json`: solicitud de paquete, perfiles y contexto de iteración opcional.
@@ -95,4 +108,6 @@ Las pruebas cubren la expansión de presets, el generador determinista, la relac
 - [Workflow n8n](docs/workflow-n8n.md)
 - [Entorno](docs/entorno.md)
 - [Apoyos de accesibilidad](docs/accessibility-supports.md)
+- [Registro E2E sanitizado](docs/e2e-test-record.md)
+- [Entrega pública](docs/public-release.md)
 - [Contratos](schemas/)

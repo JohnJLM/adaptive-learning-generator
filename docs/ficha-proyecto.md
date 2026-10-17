@@ -33,5 +33,5 @@ Los resultados se interpretarán de forma descriptiva y de acuerdo con el tamañ
 
 - Los perfiles 1.º ESO, 4.º ESO y 2.º Bachillerato son una progresión experimental, no un diagnóstico ni una secuenciación oficial directa.
 - El marco inicial es LOMLOE estatal; cualquier alineación autonómica o de centro requerirá comprobación documental específica.
-- Las fuentes didácticas verificables, la persistencia longitudinal, la ejecución real de la plantilla n8n/Gemini, las cuotas y los evaluadores siguen pendientes.
+- Las fuentes didácticas verificables, la persistencia longitudinal, la definición de cuota/presupuesto y los evaluadores siguen pendientes. La integración n8n/Gemini se validó técnicamente en Test desde la UI desplegada: generación de dos perfiles, revisión selectiva, cierre y logs de metadatos. Esta evidencia no equivale a una evaluación académica A/B/C ni a persistencia longitudinal.
 - La ficha académica completa y el historial de decisiones se mantienen fuera de este repositorio, en el dossier privado de trabajo del TFM.
