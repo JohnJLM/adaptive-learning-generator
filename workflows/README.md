@@ -5,7 +5,7 @@ Esta carpeta contiene dos clases de archivos:
 - Plantillas `*.template.json`: configuraciones importables, sin secretos y sin ejecución acreditada.
 - Exportaciones `*.json`: únicamente workflows ejecutados y probados realmente, sanitizados antes de versionarse.
 
-`educational-package-gemini-sheets.template.json` es la plantilla v2 para paquetes educativos, iteración selectiva y cierre. Requiere configurar Header Auth con `X-TFM-Access-Key: <clave compartida>`, Gemini y Google Sheets, además del modelo, el identificador de la hoja y el origen CORS antes de ejecutarlo.
+`educational-package-gemini-sheets.template.json` es la plantilla v2 para paquetes educativos, iteración selectiva y cierre. Requiere configurar Header Auth con `X-TFM-Access-Key: <clave compartida>`, Gemini y Google Sheets, además del modelo, el identificador de la hoja y el origen CORS antes de ejecutarlo. Sustituir `REPLACE_WITH_GOOGLE_SHEET_DOCUMENT_ID` en los nodos `Validate Request` y `Prepare Finalization Log` por el ID del documento de destino.
 
 Cuando se configure la cuenta n8n Cloud:
 
